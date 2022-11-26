@@ -1,0 +1,23 @@
+#related_products {
+  @extend #featured;
+}
+
+.related_swiper {
+  @extend .featured_swiper;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: var(--main-color) !important;
+  &:after {
+    font-size: 40px;
+    font-weight: 1000;
+  }
+}
+
+.swiper-button-prev {
+  left: 5px;
+}
+.swiper-button-next {
+  right: 5px;
+}
