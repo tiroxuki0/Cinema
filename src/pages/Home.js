@@ -11,7 +11,7 @@ const Home = () => {
 
   return (
     <main>
-      <section id="hero">
+      {/* <section id="hero">
         <HeroSlider />
       </section>
 
@@ -20,7 +20,7 @@ const Home = () => {
           <SectionsHead heading="Featured Products" />
           <FeaturedSlider />
         </div>
-      </section>
+      </section> */}
 
       <section id="products" className="section">
         <div className="container">

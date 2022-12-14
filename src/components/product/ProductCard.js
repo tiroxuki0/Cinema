@@ -1,4 +1,5 @@
 import React from "react";
+import Skeleton from "@mui/material/Skeleton";
 import { IoMdStar } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { displayMoney } from "../../helpers/utils";
@@ -60,7 +61,7 @@ const ProductCard = (props) => {
           <Link to={`${path}${id}`}>
             <LazyLoadImage
               effect="blur"
-              PlaceholderSrc={imageFinal}
+              placeholderSrc={imageFinal}
               alt={imageFinal}
               src={imageFinal}
             />
