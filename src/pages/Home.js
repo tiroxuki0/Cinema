@@ -11,16 +11,16 @@ const Home = () => {
 
   return (
     <main>
-      {/* <section id="hero">
+      <section id="hero">
         <HeroSlider />
-      </section> */}
+      </section>
 
-      {/* <section id="featured" className="section">
+      <section id="featured" className="section">
         <div className="container">
           <SectionsHead heading="Featured Products" />
           <FeaturedSlider />
         </div>
-      </section> */}
+      </section>
 
       <section id="products" className="section">
         <div className="container">
