@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { BsArrowRight } from "react-icons/bs";
 import useActive from "../../hooks/useActive";
@@ -14,6 +14,10 @@ const TopProducts = () => {
   const productsData = useSelector((state) => state.data.products);
   const [products, setProducts] = useState(productsData);
   const { activeClass, handleActive } = useActive(0);
+
+  useEffect(() => {
+    setProducts(productsData);
+  }, [productsData]);
 
   // making a unique set of product's category
   const productsCategory = [
@@ -80,7 +84,7 @@ const TopProducts = () => {
             </ul>
           </div>
           <div className="wrapper products_wrapper">
-            {products.slice(0, 11).map((item) => (
+            {products.slice(0, 7).map((item) => (
               <ProductCard key={item.id} {...item} />
             ))}
             <div className="card products_card browse_card">

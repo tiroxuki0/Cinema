@@ -15,6 +15,7 @@ const HeroSlider = () => {
   const pendingImages = useSelector((state) => state.data.pendingImages);
   const productsData = useSelector((state) => state.data.products);
   const imagesData = useSelector((state) => state.data.images);
+  const [imageLoading, setImageLoading] = React.useState(true);
 
   const heroProducts = productsData.filter(
     (item) => item.tag === "hero-product"
@@ -75,7 +76,13 @@ const HeroSlider = () => {
                 </div>
                 <figure
                   className="hero_item_img"
-                  style={{ width: "100%", height: "100%" }}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
                 >
                   <Skeleton
                     sx={{ bgcolor: "grey.900" }}
@@ -132,7 +139,19 @@ const HeroSlider = () => {
                   </Link>
                 </div>
                 <figure className="hero_item_img">
-                  <img src={imageFinal} alt="product-img" />
+                  {imageLoading && (
+                    <Skeleton
+                      sx={{ bgcolor: "grey.900" }}
+                      variant="rect"
+                      width={500}
+                      height={400}
+                    />
+                  )}
+                  <img
+                    alt={imageFinal}
+                    src={imageFinal}
+                    onLoad={() => setImageLoading(false)}
+                  />
                 </figure>
               </SwiperSlide>
             );

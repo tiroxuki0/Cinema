@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import "./styles/style.scss";
 import "react-toastify/dist/ReactToastify.css";
+import "react-lazy-load-image-component/src/effects/blur.css";
 import reportWebVitals from "./reportWebVitals";
 import { store, persistor } from "./redux/store";
 import { Provider } from "react-redux";

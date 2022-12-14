@@ -23,6 +23,7 @@ const FeaturedSlider = () => {
   const pendingImages = useSelector((state) => state.data.pendingImages);
   const productsData = useSelector((state) => state.data.products);
   const imagesData = useSelector((state) => state.data.images);
+  const [imageLoading, setImageLoading] = React.useState(true);
 
   const featuredProducts = productsData.filter(
     (item) => item.tag === "featured-product"
@@ -113,7 +114,7 @@ const FeaturedSlider = () => {
                 </SwiperSlide>
               );
             })
-          : featuredProducts.map((item) => {
+          : featuredProducts.map((item, index) => {
               const { id, images, title, finalPrice, originalPrice, path } =
                 item;
               const newPrice = displayMoney(finalPrice);
@@ -136,7 +137,21 @@ const FeaturedSlider = () => {
                   <div className="featured_title">{title}</div>
                   <figure className="featured_img">
                     <Link to={`${path}${id}`}>
-                      <img src={imageFinal} alt="" />
+                      {imageLoading && (
+                        <Skeleton
+                          sx={{ bgcolor: "grey.900" }}
+                          variant="rect"
+                          width={"100%"}
+                          height={200}
+                        />
+                      )}
+                      <img
+                        alt={imageFinal}
+                        src={imageFinal}
+                        onLoad={() =>
+                          index === 0 ? setImageLoading(false) : null
+                        }
+                      />
                     </Link>
                   </figure>
                   <h2 className="products_price">

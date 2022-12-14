@@ -11,6 +11,7 @@ import Services from "../components/common/Services";
 import { useSelector, useDispatch } from "react-redux";
 import { addItem as addItemRedux } from "../redux/cartSlice";
 import { toggleForm as toggleFormRedux } from "../redux/commonSlice";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -153,13 +154,23 @@ const ProductDetails = () => {
                       className={`tabs_item ${activeClass(i)}`}
                       onClick={() => handlePreviewImg(i)}
                     >
-                      <img src={imageFinal} alt="product-img" />
+                      <LazyLoadImage
+                        effect="blur"
+                        PlaceholderSrc={imageFinal}
+                        alt={imageFinal}
+                        src={imageFinal}
+                      />
                     </div>
                   );
                 })}
               </div>
               <figure className="prod_details_img">
-                <img src={previewImg} alt="product-img" />
+                <LazyLoadImage
+                  effect="blur"
+                  PlaceholderSrc={previewImg}
+                  alt={previewImg}
+                  src={previewImg}
+                />
               </figure>
             </div>
 

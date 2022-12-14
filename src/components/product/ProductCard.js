@@ -5,6 +5,7 @@ import { displayMoney } from "../../helpers/utils";
 import useActive from "../../hooks/useActive";
 import { addItem as addItemRedux } from "../../redux/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import { toggleForm as toggleFormRedux } from "../../redux/commonSlice";
 
 const ProductCard = (props) => {
@@ -57,7 +58,12 @@ const ProductCard = (props) => {
       <div className="card products_card">
         <figure className="products_img">
           <Link to={`${path}${id}`}>
-            <img src={imageFinal} alt="product-img" />
+            <LazyLoadImage
+              effect="blur"
+              PlaceholderSrc={imageFinal}
+              alt={imageFinal}
+              src={imageFinal}
+            />
           </Link>
         </figure>
         <div className="products_details">
