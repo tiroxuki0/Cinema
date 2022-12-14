@@ -11,6 +11,7 @@ import {
 import { displayMoney, createArray } from "../../helpers/utils";
 import { useSelector } from "react-redux";
 import Skeleton from "@mui/material/Skeleton";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import "swiper/scss";
 import "swiper/scss/autoplay";
@@ -145,12 +146,21 @@ const FeaturedSlider = () => {
                           height={200}
                         />
                       )}
+                      {!imageLoading && (
+                        <LazyLoadImage
+                          effect="blur"
+                          placeholderSrc={imageFinal}
+                          alt={imageFinal}
+                          src={imageFinal}
+                          onLoad={() => setImageLoading(false)}
+                          visibleByDefault={!imageLoading ? true : false}
+                        />
+                      )}
                       <img
+                        style={{ display: "none" }}
                         alt={imageFinal}
                         src={imageFinal}
-                        onLoad={() =>
-                          index === 0 ? setImageLoading(false) : null
-                        }
+                        onLoad={() => setImageLoading(false)}
                       />
                     </Link>
                   </figure>

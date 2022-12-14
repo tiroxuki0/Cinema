@@ -17,6 +17,7 @@ const ProductCard = (props) => {
   const formUserInfo = useSelector((state) => state.common.formUserInfo);
   const imagesData = useSelector((state) => state.data.images);
   const { active, handleActive, activeClass } = useActive(false);
+  const [imageLoading, setImageLoading] = React.useState(true);
 
   // handling Add-to-cart
   const handleAddItem = () => {
@@ -59,11 +60,27 @@ const ProductCard = (props) => {
       <div className="card products_card">
         <figure className="products_img">
           <Link to={`${path}${id}`}>
-            <LazyLoadImage
-              effect="blur"
-              placeholderSrc={imageFinal}
+            {imageLoading && (
+              <Skeleton
+                sx={{ bgcolor: "grey.900" }}
+                variant="rect"
+                width={"100%"}
+                height={300}
+              />
+            )}
+            {!imageLoading && (
+              <LazyLoadImage
+                effect="blur"
+                placeholderSrc={imageFinal}
+                alt={imageFinal}
+                src={imageFinal}
+              />
+            )}
+            <img
+              style={{ display: "none" }}
               alt={imageFinal}
               src={imageFinal}
+              onLoad={() => setImageLoading(false)}
             />
           </Link>
         </figure>
