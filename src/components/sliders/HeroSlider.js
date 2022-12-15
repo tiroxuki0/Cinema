@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, A11y, Autoplay } from "swiper";
 import { displayMoney, createArray } from "../../helpers/utils";
 import { useSelector } from "react-redux";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import "swiper/scss";
 import "swiper/scss/autoplay";
@@ -147,7 +148,16 @@ const HeroSlider = () => {
                       height={400}
                     />
                   )}
+                  {!imageLoading && (
+                    <LazyLoadImage
+                      effect="blur"
+                      placeholderSrc={imageFinal}
+                      alt={imageFinal}
+                      src={imageFinal}
+                    />
+                  )}
                   <img
+                    style={{ display: "none" }}
                     alt={imageFinal}
                     src={imageFinal}
                     onLoad={() => setImageLoading(false)}

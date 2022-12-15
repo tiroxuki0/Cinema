@@ -152,8 +152,6 @@ const FeaturedSlider = () => {
                           placeholderSrc={imageFinal}
                           alt={imageFinal}
                           src={imageFinal}
-                          onLoad={() => setImageLoading(false)}
-                          visibleByDefault={!imageLoading ? true : false}
                         />
                       )}
                       <img
