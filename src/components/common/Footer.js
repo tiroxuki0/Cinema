@@ -165,7 +165,7 @@ const Footer = () => {
           <div className="sub_footer_wrapper">
             <div className="foot_copyright">
               <p>
-                {currYear} | X-Beat. All Rights Reserved. Customize by |{" "}
+                {currYear} | X-Beat. All Rights Reserved. Coded by |{" "}
                 <a href="https://github.com/tiroxuki0">Miinh Huy</a>
               </p>
             </div>
