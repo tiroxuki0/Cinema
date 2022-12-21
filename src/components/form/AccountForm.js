@@ -10,11 +10,6 @@ import {
   setFormUserInfo as setFormUserInfoRedux,
 } from "../../redux/commonSlice";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  facebookSignIn,
-  googleSignIn,
-  addDocument,
-} from "../../firebase/service";
 import useToast from "../../hooks/useToast";
 
 const antIcon = (
@@ -65,15 +60,6 @@ const AccountForm = () => {
         "success",
         `Hi ${result.data?._tokenResponse?.displayName} enjoy your shopping!`
       );
-      addDocument("usersData", {
-        uid,
-        email: result.data.user?.email
-          ? result.data.user?.email
-          : result.data.user?.providerData[0].email,
-        username: displayName,
-        photoURL,
-        providerId: result.data.providerId,
-      });
       dispatch(
         setFormUserInfoRedux({
           uid,
@@ -104,16 +90,10 @@ const AccountForm = () => {
   };
 
   /* FB SIGN IN */
-  const handleSignInFB = async () => {
-    const result = await facebookSignIn();
-    signIn(result);
-  };
+  const handleSignInFB = async () => {};
 
   /* GOOGLE SIGN IN */
-  const handleSignInGG = async () => {
-    const result = await googleSignIn();
-    signIn(result);
-  };
+  const handleSignInGG = async () => {};
 
   return (
     <>
@@ -142,7 +122,7 @@ const AccountForm = () => {
                   <p>
                     {isSignupVisible
                       ? "Already have an account ?"
-                      : "New to X-Beat ?"}
+                      : "New to Cinema ?"}
                     &nbsp;&nbsp;
                     <button type="button" onClick={handleIsSignupVisible}>
                       {isSignupVisible ? "Login" : "Create an account"}

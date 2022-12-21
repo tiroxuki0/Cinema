@@ -2,12 +2,11 @@ import React from "react";
 import ReactStars from "react-rating-stars-component";
 import useActive from "../../hooks/useActive";
 import { v4 as uuid } from "uuid";
-import ProductReviews from "./ProductReviews";
+import MovieReviews from "./MovieReviews";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleForm as toggleFormRedux } from "../../redux/commonSlice";
-import { addDocument } from "../../firebase/service";
 
-const ProductSummary = (props) => {
+const MovieSummary = (props) => {
   const { id, brand, title, info, category, type, connectivity } = props;
   const dispatch = useDispatch();
   const reviewsData = useSelector((state) => state.data.reviews);
@@ -31,19 +30,6 @@ const ProductSummary = (props) => {
       const date = new Date();
       const text = Date().toLocaleString();
       if (comment) {
-        addDocument("reviewsData", {
-          id: uuid(),
-          productId: id,
-          name: formUserInfo.username,
-          uid: formUserInfo.uid,
-          photoURL: formUserInfo.photoURL,
-          rateCount: rate,
-          review: comment,
-          createdAt: {
-            text: text.split(date.getFullYear())[0] + date.getFullYear(),
-            second: date.getTime() / 1000,
-          },
-        });
         setComment("");
       } else {
         setError("Please type your comment!");
@@ -161,7 +147,7 @@ const ProductSummary = (props) => {
                           parseFloat(a.createdAt.second)
                         );
                       })
-                      .map((item) => <ProductReviews key={item.id} {...item} />)
+                      .map((item) => <MovieReviews key={item.id} {...item} />)
                   ) : (
                     <li>No comment</li>
                   )}
@@ -202,4 +188,4 @@ const ProductSummary = (props) => {
   );
 };
 
-export default ProductSummary;
+export default MovieSummary;

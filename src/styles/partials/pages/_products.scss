@@ -1,16 +1,16 @@
 .products_wrapper {
-  @include grid-cols(4, 1fr, 0.7rem);
+  @include grid-cols(5, 1fr, 1rem);
 
   @include devices(lg) {
-    @include grid-cols(3, 1fr, 0.7rem);
+    @include grid-cols(4, 1fr, 1rem);
   }
 
   @include devices(md) {
-    @include grid-cols(2, 1fr, 0.6rem);
+    @include grid-cols(3, 1fr, 0.6rem);
   }
 
   @include devices(xs) {
-    grid-template-columns: 1fr;
+    grid-template-columns: 2fr;
   }
 }
 
@@ -19,17 +19,15 @@
 }
 
 .products_filter_tabs {
-  @include margin-y(3rem, 5rem);
+  @include margin-y(2rem, 2rem);
 }
 
 .products_card {
-  @include bordered(1px, rgba($color: #ffffff, $alpha: 0.4));
-  border-radius: 3px;
+  border-radius: 20px 20px 0 0;
   box-shadow: 0px 5px 10px rgba($color: #000000, $alpha: 0.5);
-  overflow: hidden;
   display: flex;
   flex-direction: column;
-  height: 660px;
+  height: 530px;
   &.browse_card {
     @include centered;
     @include padding-y(5rem, 5rem);
@@ -46,11 +44,8 @@
 }
 
 .products_img {
-  background: var(--bg-color-2);
   text-align: center;
-  padding: 1rem;
-  overflow: hidden;
-  height: 400px;
+  height: 340px;
   flex-shrink: 0;
   a {
     display: block;
@@ -59,10 +54,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-  img {
-    width: 80%;
-    height: 70%;
+    span {
+      width: 100%;
+      height: 100%;
+      img {
+        @include img-fit;
+        object-fit: fill;
+        border-radius: 20px;
+      }
+    }
     @include transition(transform, 0.25s, ease);
 
     &:hover {
@@ -77,16 +77,28 @@
   margin-top: auto;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 .products_title {
   @include margin-y(0.8rem, 0.4rem);
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
 }
 
 .products_info {
   opacity: 0.8;
   font-weight: 500;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
 }
 
 .products_btn {

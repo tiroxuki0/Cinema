@@ -52,7 +52,7 @@ const SearchBar = () => {
               <input
                 type="search"
                 className="input_field"
-                placeholder="Search for product..."
+                placeholder="Search for movie..."
                 onChange={handleSearching}
               />
               {/* <button

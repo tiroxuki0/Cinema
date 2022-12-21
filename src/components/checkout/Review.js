@@ -5,7 +5,6 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { useSelector, useDispatch } from "react-redux";
 import { setActiveStep, setIdOrder } from "../../redux/commonSlice";
-import { writeOrder } from "../../firebase/service";
 
 export default function Review() {
   const dispatch = useDispatch();
@@ -35,12 +34,7 @@ export default function Review() {
 
   const handlePlaceOrder = () => {
     const idOrder = Math.round(Math.random() * 10000000);
-    writeOrder(uid, idOrder, {
-      shippingAddress: shippingAddressTrim,
-      paymentDetails: paymentDetailsTrim,
-      cart: { ...otherCart },
-      tracking: "ordered",
-    });
+    /*  */
     dispatch(setIdOrder(idOrder));
     dispatch(setActiveStep(activeStep + 1));
   };

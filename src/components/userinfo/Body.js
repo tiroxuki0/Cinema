@@ -14,14 +14,7 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { useSelector, useDispatch } from "react-redux";
 import useToast from "../../hooks/useToast";
-import { updateUser } from "../../firebase/service";
 import { setFormUserInfo } from "../../redux/commonSlice";
-import {
-  signInWithEmailAndPassword,
-  updateEmail,
-  updatePassword,
-} from "firebase/auth";
-import { auth } from "../../firebase/config";
 
 const BoxStyled = styledd(Box)`
   overflow: hidden auto;
@@ -133,91 +126,12 @@ function CustomizedList() {
         password,
       })
     );
-    updateUser(userCurrent.id, {
-      ...formUserInfo,
-      username: name,
-      email,
-      password,
-    });
     if (
       prevUser.current.password !== password &&
       prevUser.current.email !== email
     ) {
-      await updateEmail(auth.currentUser, email)
-        .then(async () => {
-          // Email updated!
-          console.log("Email updated");
-        })
-        .catch((error) => {
-          console.log(error);
-          // An error occurred
-          // ...
-        });
-      await updatePassword(auth.currentUser, password)
-        .then(() => {
-          // Password updated!
-          console.log("Password updated");
-          notify("success", "Email and Password updated!", {
-            position: "bottom-right",
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-          // An error occurred
-          // ...
-        });
-      await signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // Signed in
-          console.log("Re-SignIn");
-
-          /*  */
-        })
-        .catch((error) => {
-          return { code: 0, message: "Signin failed!", error };
-        });
     } else if (prevUser.current.password !== password) {
-      await updatePassword(auth.currentUser, password)
-        .then(() => {
-          // Password updated!
-          console.log("Password updated");
-          notify("success", "Password updated!", { position: "bottom-right" });
-        })
-        .catch((error) => {
-          console.log(error);
-          // An error occurred
-        });
-      await signInWithEmailAndPassword(auth, prevUser.current.email, password)
-        .then((userCredential) => {
-          // Signed in
-          console.log("Re-SignIn");
-
-          /*  */
-        })
-        .catch((error) => {
-          return { code: 0, message: "Signin failed!", error };
-        });
     } else if (prevUser.current.email !== email) {
-      await updateEmail(auth.currentUser, email)
-        .then(async () => {
-          // Email updated!
-          console.log("Email updated");
-          notify("success", "Email updated!", { position: "bottom-right" });
-        })
-        .catch((error) => {
-          console.log(error);
-          // An error occurred
-        });
-      await signInWithEmailAndPassword(auth, email, prevUser.current.password)
-        .then((userCredential) => {
-          // Signed in
-          console.log("Re-SignIn");
-
-          /*  */
-        })
-        .catch((error) => {
-          return { code: 0, message: "Signin failed!", error };
-        });
     } else if (prevUser.current.username !== name) {
       notify("success", "Username updated!", { position: "bottom-right" });
     }

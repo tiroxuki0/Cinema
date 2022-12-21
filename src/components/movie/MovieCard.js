@@ -1,6 +1,6 @@
 import React from "react";
 import Skeleton from "@mui/material/Skeleton";
-import { IoMdStar } from "react-icons/io";
+import { AiFillStar } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { displayMoney } from "../../helpers/utils";
 import useActive from "../../hooks/useActive";
@@ -10,12 +10,15 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { toggleForm as toggleFormRedux } from "../../redux/commonSlice";
 
 const ProductCard = (props) => {
-  const { id, title, info, finalPrice, originalPrice, rateCount, path, stock } =
+  const { id, poster_path, title, overview, release_date, vote_average } =
     props;
+
+  const posterPath = `https://image.tmdb.org/t/p/w500/${poster_path}`;
+  const release = release_date.split("-")[0];
+  const rate = vote_average.toFixed(1);
 
   const dispatch = useDispatch();
   const formUserInfo = useSelector((state) => state.common.formUserInfo);
-  const imagesData = useSelector((state) => state.data.images);
   const { active, handleActive, activeClass } = useActive(false);
   const [imageLoading, setImageLoading] = React.useState(true);
 
@@ -36,30 +39,11 @@ const ProductCard = (props) => {
     }
   };
 
-  const newPrice = displayMoney(finalPrice);
-  const oldPrice = displayMoney(originalPrice);
-
-  /*  */
-  const imagePath = props?.heroImage
-    ? props?.heroImage
-        .replaceAll("/", "%2F")
-        .replace("%2F", "")
-        .replaceAll(" ", "%20")
-    : props.images[0]
-        .replaceAll("/", "%2F")
-        .replace("%2F", "")
-        .replaceAll(" ", "%20");
-
-  const imageFinal = imagesData.find((img) =>
-    img.toLowerCase().includes(imagePath.toLowerCase())
-  );
-  /*  */
-
   return (
     <>
       <div className="card products_card">
         <figure className="products_img">
-          <Link to={`${path}${id}`}>
+          <Link /* to={`${path}${id}`} */>
             {imageLoading && (
               <Skeleton
                 sx={{ bgcolor: "grey.900" }}
@@ -71,54 +55,40 @@ const ProductCard = (props) => {
             {!imageLoading && (
               <LazyLoadImage
                 effect="blur"
-                placeholderSrc={imageFinal}
-                alt={imageFinal}
-                src={imageFinal}
+                placeholderSrc={posterPath}
+                alt={posterPath}
+                src={posterPath}
               />
             )}
             <img
               style={{ display: "none" }}
-              alt={imageFinal}
-              src={imageFinal}
+              alt={posterPath}
+              src={posterPath}
               onLoad={() => setImageLoading(false)}
             />
           </Link>
         </figure>
         <div className="products_details">
-          <span className="rating_star">
-            {[...Array(rateCount)].map((_, i) => (
-              <IoMdStar key={i} />
-            ))}
-          </span>
           <h3 className="products_title">
-            <Link to={`${path}${id}`}>{title}</Link>
+            <Link /* to={`${path}${id}`} */>{title}</Link>
           </h3>
-          <h5 className="products_info">{info}</h5>
-          <div className="separator"></div>
-          <h2 className="products_price">
-            {newPrice} &nbsp;
-            <small>
-              <del>{oldPrice}</del>
-            </small>
+          <h5 className="products_info">{overview}</h5>
+          <h2 className="featured_info">
+            <div className="featured_rate">
+              {release}
+              <div className="dot"></div>
+              <small>{rate}</small>
+              <AiFillStar color="yellow" />
+            </div>
+            <div className="featured_category">Movie</div>
           </h2>
-          {stock > 0 ? (
-            <button
-              type="button"
-              className={`btn products_btn ${activeClass(id)}`}
-              onClick={handleAddItem}
-            >
-              {active ? "Added" : "Add to cart"}
-            </button>
-          ) : (
-            <button
-              type="button"
-              className={`btn products_btn ${activeClass(id)}`}
-              onClick={handleAddItem}
-              disabled
-            >
-              {"Out of stock"}
-            </button>
-          )}
+          <button
+            type="button"
+            className={`btn products_btn ${activeClass(id)}`}
+            onClick={handleAddItem}
+          >
+            {active ? "Added" : "Add to Wishlist"}
+          </button>
         </div>
       </div>
     </>

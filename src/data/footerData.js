@@ -16,21 +16,6 @@ export const footMenu = [
         path: "/",
       },
       {
-        id: 2,
-        link: "Track Order",
-        path: "/",
-      },
-      {
-        id: 3,
-        link: "Cancel Order",
-        path: "/",
-      },
-      {
-        id: 4,
-        link: "Return Order",
-        path: "/",
-      },
-      {
         id: 5,
         link: "Warranty Info",
         path: "/",

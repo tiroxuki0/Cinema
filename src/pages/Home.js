@@ -2,12 +2,12 @@ import React from "react";
 import HeroSlider from "../components/sliders/HeroSlider";
 import FeaturedSlider from "../components/sliders/FeaturedSlider";
 import SectionsHead from "../components/common/SectionsHead";
-import TopProducts from "../components/product/TopProducts";
+import TopProducts from "../components/movie/TopProducts";
 import Services from "../components/common/Services";
 import useDocTitle from "../hooks/useDocTitle";
 
 const Home = () => {
-  useDocTitle(null);
+  useDocTitle("Home | Awesome Cinema");
 
   return (
     <main>
@@ -17,19 +17,17 @@ const Home = () => {
 
       <section id="featured" className="section">
         <div className="container">
-          <SectionsHead heading="Featured Products" />
+          <SectionsHead heading="Now Playing Movies" />
           <FeaturedSlider />
         </div>
       </section>
 
       <section id="products" className="section">
         <div className="container">
-          <SectionsHead heading="Top Products" />
+          <SectionsHead heading="Category Movies" />
           <TopProducts />
         </div>
       </section>
-
-      <Services />
     </main>
   );
 };

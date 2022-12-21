@@ -6,14 +6,14 @@ import useDocTitle from "../hooks/useDocTitle";
 import useActive from "../hooks/useActive";
 import SectionsHead from "../components/common/SectionsHead";
 import RelatedSlider from "../components/sliders/RelatedSlider";
-import ProductSummary from "../components/product/ProductSummary";
+import MovieSummary from "../components/movie/MovieSummary";
 import Services from "../components/common/Services";
 import { useSelector, useDispatch } from "react-redux";
 import { addItem as addItemRedux } from "../redux/cartSlice";
 import { toggleForm as toggleFormRedux } from "../redux/commonSlice";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
-const ProductDetails = () => {
+const MovieDetails = () => {
   const dispatch = useDispatch();
   const formUserInfo = useSelector((state) => state.common.formUserInfo);
   const productsData = useSelector((state) => state.data.products);
@@ -261,7 +261,7 @@ const ProductDetails = () => {
         </div>
       </section>
 
-      <ProductSummary {...product} />
+      <MovieSummary {...product} />
 
       <section id="related_products" className="section">
         <div className="container">
@@ -275,4 +275,4 @@ const ProductDetails = () => {
   );
 };
 
-export default ProductDetails;
+export default MovieDetails;

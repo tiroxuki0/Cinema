@@ -1,11 +1,10 @@
 import React from "react";
 import { Routes, Route } from "react-router";
 import useScrollRestore from "../hooks/useScrollRestore";
-import AllProducts from "../pages/AllProducts";
 import Cart from "../pages/Cart";
 import Orders from "../pages/Orders";
 import Home from "../pages/Home";
-import ProductDetails from "../pages/ProductDetails";
+import MovieDetails from "../pages/MovieDetails";
 import ErrorPage from "../pages/ErrorPage";
 
 const RouterRoutes = () => {
@@ -17,11 +16,7 @@ const RouterRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/orders" element={<Orders />} />
-        <Route path="/all-products" element={<AllProducts />} />
-        <Route
-          path="/product-details/:productId"
-          element={<ProductDetails />}
-        />
+        <Route path="/product-details/:productId" element={<MovieDetails />} />
         <Route path="/*" element={<ErrorPage />} />
       </Routes>
     </>

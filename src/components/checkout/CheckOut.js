@@ -13,15 +13,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import useToast from "../../hooks/useToast";
 import useScrollDisable from "../../hooks/useScrollDisable";
-import { ref, get, child } from "firebase/database";
-import { db } from "../../firebase/config";
 import {
   toggleCheckOut,
   setActiveStep,
   clearOrderDetails,
 } from "../../redux/commonSlice";
 import { clearAll } from "../../redux/cartSlice";
-import { checkCartUser } from "../../firebase/service";
 
 const steps = [
   "Shipping address",
@@ -56,25 +53,6 @@ export default function Checkout() {
 
   const createOrder = async () => {
     if (idOrder) {
-      const dbRef = await ref(db);
-      get(child(dbRef, `ordersData/${uid}/${idOrder}`))
-        .then((snapshot) => {
-          if (snapshot.exists()) {
-            dispatch(toggleCheckOut(false));
-            dispatch(setActiveStep(0));
-            dispatch(clearAll());
-            dispatch(clearOrderDetails());
-            checkCartUser(uid, []);
-            notify("success", `Ordered successfully!`);
-            navigate("/orders");
-          } else {
-            console.log("No orderId available");
-          }
-        })
-        .catch((error) => {
-          notify("error", `Something went wrong!`);
-          return error;
-        });
     }
   };
 

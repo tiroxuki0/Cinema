@@ -2,11 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  AiOutlineSearch,
-  AiOutlineShoppingCart,
-  AiOutlineUser,
-} from "react-icons/ai";
+import { AiOutlineSearch, AiOutlineUser, AiFillHeart } from "react-icons/ai";
 import AccountForm from "../form/AccountForm";
 import SearchBar from "./SearchBar";
 import CheckOut from "../checkout/CheckOut";
@@ -24,7 +20,6 @@ import {
   setDiscount,
   setTotalAmount,
 } from "../../redux/cartSlice";
-import { firebaseSignOut } from "../../firebase/service";
 import useToast from "../../hooks/useToast";
 import { calculateTotal, displayMoney } from "../../helpers/utils";
 
@@ -111,7 +106,7 @@ const Header = () => {
         <div className="container">
           <div className="navbar">
             <h2 className="nav_logo">
-              <Link to="/">X-Beat</Link>
+              <Link to="/">Cinema</Link>
             </h2>
             <nav className="nav_actions">
               <div className="search_action">
@@ -129,7 +124,7 @@ const Header = () => {
 
               <div className="cart_action">
                 <Link to="/cart" onClick={showCart}>
-                  <AiOutlineShoppingCart />
+                  <AiFillHeart />
                   {cartQuantity > 0 && (
                     <span className="badge">{cartQuantity}</span>
                   )}
@@ -228,7 +223,6 @@ const Header = () => {
                           dispatch(clearAll());
                           navigate("/");
                           notify("success", `Logged out`);
-                          firebaseSignOut();
                         }}
                         style={{
                           margin: "0.5rem 0px 0px 0px",

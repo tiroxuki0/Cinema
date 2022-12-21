@@ -6,21 +6,25 @@ import { Pagination, A11y, Autoplay } from "swiper";
 import { displayMoney, createArray } from "../../helpers/utils";
 import { useSelector } from "react-redux";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import axios from "axios";
 
 import "swiper/scss";
 import "swiper/scss/autoplay";
 import "swiper/scss/pagination";
 
 const HeroSlider = () => {
-  const pendingProducts = useSelector((state) => state.data.pendingProducts);
-  const pendingImages = useSelector((state) => state.data.pendingImages);
-  const productsData = useSelector((state) => state.data.products);
-  const imagesData = useSelector((state) => state.data.images);
+  const [moviesData, setMoviesData] = React.useState([]);
   const [imageLoading, setImageLoading] = React.useState(true);
 
-  const heroProducts = productsData.filter(
-    (item) => item.tag === "hero-product"
-  );
+  React.useEffect(() => {
+    const apiKey = "6991946ce8c16cbb1b593830839da3bd";
+    axios
+      .get(`https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}`)
+      .then((res) => {
+        setMoviesData(res.data.results);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <Swiper
@@ -30,12 +34,12 @@ const HeroSlider = () => {
       spaceBetween={100}
       slidesPerView={1}
       pagination={{ clickable: true }}
-      /* autoplay={{
+      autoplay={{
         delay: 4000,
         disableOnInteraction: false,
-      }} */
+      }}
     >
-      {pendingProducts && pendingImages ? (
+      {moviesData.length === 0 ? (
         <>
           {createArray(3, null).map((item, i) => {
             return (
@@ -44,27 +48,32 @@ const HeroSlider = () => {
                 className={`wrapper hero_wrapper hero_slide-${i}`}
               >
                 <div className="hero_item_txt" style={{ width: "100%" }}>
-                  <h3>
+                  <Skeleton
+                    sx={{ bgcolor: "grey.900" }}
+                    width={"25%"}
+                    height={80}
+                  />
+                  <Skeleton
+                    sx={{ bgcolor: "grey.900" }}
+                    width={"45%"}
+                    height={80}
+                  />
+                  <h2
+                    className="hero_price"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                    }}
+                  >
                     <Skeleton
                       sx={{ bgcolor: "grey.900" }}
-                      width={"20%"}
+                      width={"75px"}
                       height={50}
                     />
-                  </h3>
-                  <Skeleton
-                    sx={{ bgcolor: "grey.900" }}
-                    width={"100%"}
-                    height={80}
-                  />
-                  <Skeleton
-                    sx={{ bgcolor: "grey.900" }}
-                    width={"95%"}
-                    height={80}
-                  />
-                  <h2 className="hero_price">
                     <Skeleton
                       sx={{ bgcolor: "grey.900" }}
-                      width={"30%"}
+                      width={"75px"}
                       height={50}
                     />
                   </h2>
@@ -75,11 +84,9 @@ const HeroSlider = () => {
                     height={50}
                   />
                 </div>
-                <figure
+                <div
                   className="hero_item_img"
                   style={{
-                    width: "100%",
-                    height: "100%",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -87,82 +94,47 @@ const HeroSlider = () => {
                 >
                   <Skeleton
                     sx={{ bgcolor: "grey.900" }}
-                    variant="rect"
-                    width={500}
-                    height={400}
+                    width={"100%"}
+                    height={"100%"}
                   />
-                </figure>
+                </div>
               </SwiperSlide>
             );
           })}
         </>
       ) : (
         <>
-          {heroProducts.map((item, i) => {
-            const { id, title, tagline, finalPrice, originalPrice, path } =
-              item;
-            const newPrice = displayMoney(finalPrice);
-            const oldPrice = displayMoney(originalPrice);
-
-            /*  */
-            const imagePath = item?.heroImage
-              ? item?.heroImage
-                  .replaceAll("/", "%2F")
-                  .replace("%2F", "")
-                  .replaceAll(" ", "%20")
-              : item.images[0]
-                  .replaceAll("/", "%2F")
-                  .replace("%2F", "")
-                  .replaceAll(" ", "%20");
-
-            const imageFinal = imagesData.find((img) =>
-              img.toLowerCase().includes(imagePath.toLowerCase())
-            );
-
-            /*  */
+          {moviesData.map((item, i) => {
+            const { original_title, poster_path, backdrop_path, id } = item;
+            const backdropPath = `https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${backdrop_path}`;
 
             return (
               <SwiperSlide
                 key={id}
                 className={`wrapper hero_wrapper hero_slide-${i}`}
               >
+                <div className="child"></div>
                 <div className="hero_item_txt">
-                  <h3>{title}</h3>
-                  <h1>{tagline}</h1>
-                  <h2 className="hero_price">
-                    {newPrice} &nbsp;
-                    <small>
-                      <del>{oldPrice}</del>
-                    </small>
-                  </h2>
-                  <Link to={`${path}${id}`} className="btn">
-                    Shop Now
-                  </Link>
+                  <h3>Trending movie</h3>
+                  <h1>{original_title}</h1>
+                  <Link /* to={`${path}${id}`} */ className="btn">Watch</Link>
                 </div>
-                <figure className="hero_item_img">
-                  {imageLoading && (
-                    <Skeleton
-                      sx={{ bgcolor: "grey.900" }}
-                      variant="rect"
-                      width={500}
-                      height={400}
-                    />
-                  )}
+                <div className="hero_item_img">
                   {!imageLoading && (
                     <LazyLoadImage
                       effect="blur"
-                      placeholderSrc={imageFinal}
-                      alt={imageFinal}
-                      src={imageFinal}
+                      placeholderSrc={backdropPath}
+                      alt={backdropPath}
+                      src={backdropPath}
                     />
                   )}
                   <img
                     style={{ display: "none" }}
-                    alt={imageFinal}
-                    src={imageFinal}
+                    alt={backdropPath}
+                    src={backdropPath}
                     onLoad={() => setImageLoading(false)}
                   />
-                </figure>
+                </div>
               </SwiperSlide>
             );
           })}

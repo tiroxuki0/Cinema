@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { checkCartUser } from "../firebase/service";
 
 export const cartSlice = createSlice({
   name: "cartSlice",
@@ -61,7 +60,6 @@ export const cartSlice = createSlice({
       }
 
       state.cartItems = updatedCartItems;
-      checkCartUser(action.payload.uid, updatedCartItems);
     },
     removeItem: (state, action) => {
       state.cartItems = state.cartItems.filter(

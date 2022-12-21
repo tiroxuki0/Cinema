@@ -1,85 +1,123 @@
 #footer {
-    background-color: var(--black-color);
-    @include padding-y(3rem, 2rem);
+  background-image: url("https://assets.nflxext.com/ffe/siteui/vlv3/5e48e7b6-350d-48d9-96d6-de8ca173c89f/e39414f0-9714-4480-8e82-119dc943cfc1/VN-vi-20221219-popsignuptwoweeks-perspective_alpha_website_large.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: var(--black-color);
+  position: relative;
+  margin-top: 2rem;
+  > * {
+    position: relative;
+    z-index: 4;
+  }
+  .child {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 3;
+    background: radial-gradient(
+      circle,
+      hsla(0, 0%, 91%, 1) 0%,
+      var(--bg-color) 150%
+    );
+    background: -moz-radial-gradient(
+      circle,
+      hsla(0, 0%, 91%, 1) 0%,
+      var(--bg-color) 150%
+    );
+    background: -webkit-radial-gradient(
+      circle,
+      hsla(0, 0%, 91%, 0%) 0%,
+      var(--bg-color) 147%
+    );
+  }
+  &:before {
+    @include pseudo($top: 0, $left: 0, $width: 100%, $height: 100%);
+    background: -webkit-linear-gradient(var(--bg-color), #e8e8e800);
+    transform: translate(0, 0%);
+  }
+  @include padding-y(3rem, 2rem);
 
-    .separator {
-        @include margin-y(2.5rem, 2rem);
-        opacity: 0.7;
-    }
+  .separator {
+    @include margin-y(2.5rem, 2rem);
+    opacity: 0.7;
+  }
 }
 
 .footer_wrapper {
-    grid-template-columns: 1.4fr repeat(3, 1fr);
-    justify-items: center;
-    gap: 2rem;
+  grid-template-columns: 1.4fr repeat(3, 1fr);
+  justify-items: center;
+  gap: 2rem;
 
-    @include devices(md) {
-        grid-template-columns: 1.4fr 1fr;
-        justify-items: unset;
-        gap: 4rem;
-    }
+  @include devices(md) {
+    grid-template-columns: 1.4fr 1fr;
+    justify-items: unset;
+    gap: 4rem;
+  }
 
-    @include devices(xs) {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-    }
+  @include devices(xs) {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
 }
 
 .foot_subs {
-    p {
-        @include margin-y(1rem, 1rem);
-        font-size: 0.875rem;
-        opacity: 0.9;
-    }
+  p {
+    @include margin-y(1rem, 1rem);
+    font-size: 0.875rem;
+    opacity: 0.9;
+  }
 
-    .btn {
-        margin-top: 1rem;
-    }
+  .btn {
+    margin-top: 1rem;
+  }
 }
 
 .foot_menu {
-    ul {
-        margin-top: 1.8rem;
-        display: grid;
-        gap: 1rem;
+  ul {
+    margin-top: 1.8rem;
+    display: grid;
+    gap: 1rem;
 
-        a {
-            font-size: 0.9rem;
-            opacity: 0.8;
+    a {
+      font-size: 0.9rem;
+      opacity: 0.8;
 
-            &:hover {
-                opacity: 1;
-            }
-        }
+      &:hover {
+        opacity: 1;
+      }
     }
+  }
 }
 
 .sub_footer_wrapper {
-    @include flexbox(space-between, center);
+  @include flexbox(space-between, center);
 
-    @include devices(md) {
-        @include flexbox();
-        flex-direction: column-reverse;
-        gap: 2rem;
-    }
+  @include devices(md) {
+    @include flexbox();
+    flex-direction: column-reverse;
+    gap: 2rem;
+  }
 }
 
 .foot_copyright {
-    font-size: 0.95rem;
+  font-size: 0.95rem;
 
-    a {
-        color: #eee;
-        opacity: 0.8;
+  a {
+    color: #eee;
+    opacity: 0.8;
 
-        &:hover {
-            opacity: 1;
-        }
+    &:hover {
+      opacity: 1;
     }
+  }
 }
 
 .foot_social {
-    @include flexbox();
-    gap: 2rem;
-    font-size: 1.2rem;
-    margin-right: 4rem;
+  @include flexbox();
+  gap: 2rem;
+  font-size: 1.2rem;
+  margin-right: 4rem;
 }

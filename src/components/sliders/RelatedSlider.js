@@ -1,7 +1,7 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, A11y, Autoplay } from "swiper";
-import ProductCard from "../product/ProductCard";
+import ProductCard from "../movie/MovieCard";
 import { useSelector } from "react-redux";
 
 import "swiper/scss";

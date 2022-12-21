@@ -12,7 +12,6 @@ import Avatar from "@mui/material/Avatar";
 import { useSelector, useDispatch } from "react-redux";
 import { setUserAvatar } from "../../redux/commonSlice";
 import useToast from "../../hooks/useToast";
-import { updateUser } from "../../firebase/service";
 
 const ListHeaderWrapper = styledd.div`
   margin-bottom: 20px;
@@ -146,10 +145,6 @@ const ListHeader = () => {
       avatars[selectedAvatar] === formUserInfo.photoURL &&
       prevSelected.current !== selectedAvatar
     ) {
-      updateUser(userCurrent.id, {
-        ...formUserInfo,
-        photoURL: avatars[selectedAvatar],
-      });
       notify("success", `User's avatar updated!`, { position: "bottom-right" });
     }
     prevSelected.current = selectedAvatar;

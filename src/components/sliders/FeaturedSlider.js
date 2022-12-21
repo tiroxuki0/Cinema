@@ -1,16 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
-import {
-  Navigation,
-  EffectCoverflow,
-  Pagination,
-  A11y,
-  Autoplay,
-} from "swiper";
-import { displayMoney, createArray } from "../../helpers/utils";
-import { useSelector } from "react-redux";
+import { Navigation, A11y, Autoplay } from "swiper";
+import { createArray } from "../../helpers/utils";
+import axios from "axios";
 import Skeleton from "@mui/material/Skeleton";
+import { AiFillStar } from "react-icons/ai";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import "swiper/scss";
@@ -20,52 +15,50 @@ import "swiper/scss/effect-coverflow";
 import "swiper/scss/navigation";
 
 const FeaturedSlider = () => {
-  const pendingProducts = useSelector((state) => state.data.pendingProducts);
-  const pendingImages = useSelector((state) => state.data.pendingImages);
-  const productsData = useSelector((state) => state.data.products);
-  const imagesData = useSelector((state) => state.data.images);
   const [imageLoading, setImageLoading] = React.useState(true);
+  const [moviesData, setMoviesData] = React.useState([]);
 
-  const featuredProducts = productsData.filter(
-    (item) => item.tag === "featured-product"
-  );
+  React.useEffect(() => {
+    const apiKey = "6991946ce8c16cbb1b593830839da3bd";
+    axios
+      .get(
+        `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US&page=1`
+      )
+      .then((res) => {
+        setMoviesData(res.data.results);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <Swiper
-      modules={[Navigation, EffectCoverflow, Pagination, A11y, Autoplay]}
+      modules={[Navigation, A11y /* , Autoplay */]}
       loop={true}
       speed={400}
       navigation={true}
-      spaceBetween={100}
-      slidesPerView={"auto"}
-      pagination={{ clickable: true }}
-      effect={"coverflow"}
-      centeredSlides={true}
-      coverflowEffect={{
-        rotate: 0,
-        stretch: 0,
-        depth: 70,
-        modifier: 3,
-        slideShadows: false,
-      }}
+      spaceBetween={25}
       autoplay={{
-        delay: 3500,
+        delay: 3000,
         disableOnInteraction: false,
       }}
       breakpoints={{
+        480: {
+          slidesPerView: 3,
+        },
         768: {
-          slidesPerView: 2,
-          spaceBetween: 200,
+          slidesPerView: 4,
         },
         992: {
-          slidesPerView: 3,
-          spaceBetween: 250,
+          slidesPerView: 5,
+        },
+        1280: {
+          slidesPerView: 6,
         },
       }}
       className="featured_swiper"
     >
       <>
-        {pendingProducts && pendingImages
+        {moviesData.length === 0
           ? createArray(7, null).map((item, i) => {
               return (
                 <SwiperSlide key={i} className="featured_slides">
@@ -115,29 +108,17 @@ const FeaturedSlider = () => {
                 </SwiperSlide>
               );
             })
-          : featuredProducts.map((item, index) => {
-              const { id, images, title, finalPrice, originalPrice, path } =
+          : moviesData.map((item, index) => {
+              const { vote_average, release_date, title, poster_path, id } =
                 item;
-              const newPrice = displayMoney(finalPrice);
-              const oldPrice = displayMoney(originalPrice);
-
-              /*  */
-              const imagePath = images[0]
-                .slice(1)
-                .split("/")
-                .reduce((result, cur) => result + "%2F" + cur, "")
-                .replace("%2F", "");
-
-              const imageFinal = imagesData.find((img) =>
-                img.toLowerCase().includes(imagePath.toLowerCase())
-              );
-              /*  */
+              const posterPath = `https://image.tmdb.org/t/p/w500/${poster_path}`;
+              const release = release_date.split("-")[0];
+              const rate = vote_average.toFixed(1);
 
               return (
                 <SwiperSlide key={id} className="featured_slides">
-                  <div className="featured_title">{title}</div>
                   <figure className="featured_img">
-                    <Link to={`${path}${id}`}>
+                    <Link /* to={`${path}${id}`} */>
                       {imageLoading && (
                         <Skeleton
                           sx={{ bgcolor: "grey.900" }}
@@ -149,24 +130,28 @@ const FeaturedSlider = () => {
                       {!imageLoading && (
                         <LazyLoadImage
                           effect="blur"
-                          placeholderSrc={imageFinal}
-                          alt={imageFinal}
-                          src={imageFinal}
+                          placeholderSrc={posterPath}
+                          alt={posterPath}
+                          src={posterPath}
                         />
                       )}
                       <img
                         style={{ display: "none" }}
-                        alt={imageFinal}
-                        src={imageFinal}
+                        alt={posterPath}
+                        src={posterPath}
                         onLoad={() => setImageLoading(false)}
                       />
                     </Link>
                   </figure>
-                  <h2 className="products_price">
-                    {newPrice} &nbsp;
-                    <small>
-                      <del>{oldPrice}</del>
-                    </small>
+                  <div className="featured_title">{title}</div>
+                  <h2 className="featured_info">
+                    <div className="featured_rate">
+                      {release}
+                      <div className="dot"></div>
+                      {rate}
+                      <AiFillStar color="yellow" style={{ width: "12px" }} />
+                    </div>
+                    <div className="featured_category">Movie</div>
                   </h2>
                 </SwiperSlide>
               );

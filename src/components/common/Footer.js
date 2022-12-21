@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Form, Input } from "antd";
 import { footMenu, footSocial } from "../../data/footerData";
-import { addDocument } from "../../firebase/service";
 import useToast from "../../hooks/useToast";
 import { createdAt } from "../../helpers/utils";
 
@@ -12,10 +11,10 @@ const Footer = () => {
   const { notify } = useToast();
 
   const onFinish = (values) => {
-    addDocument("subscribersData", {
+    /*  addDocument("subscribersData", {
       ...values,
       createdAt: createdAt(),
-    });
+    }); */
     form.resetFields();
     setAlert("Thankyou, you are subscribed to receive our daily newsletter");
 
@@ -37,16 +36,17 @@ const Footer = () => {
 
   return (
     <footer id="footer">
+      <div className="child"></div>
       <div className="container">
         <div className="wrapper footer_wrapper">
           <div className="foot_about">
             <h2>
-              <Link to="/">X-Beat</Link>
+              <Link to="/">Cinema</Link>
             </h2>
             <div className="foot_subs">
               <p>
                 Subscribe to our Email alerts to receive early discount offers,
-                and new products info.
+                and new movies info.
               </p>
 
               <Form
@@ -165,7 +165,7 @@ const Footer = () => {
           <div className="sub_footer_wrapper">
             <div className="foot_copyright">
               <p>
-                {currYear} | X-Beat. All Rights Reserved. Coded by |{" "}
+                {currYear} | Cinema. All Rights Reserved. Coded by |{" "}
                 <a href="https://github.com/tiroxuki0">Miinh Huy</a>
               </p>
             </div>

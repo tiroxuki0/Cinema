@@ -5,7 +5,6 @@ import {
   incrementItem as incrementItemRedux,
   decrementItem as decrementItemRedux,
 } from "../../redux/cartSlice";
-import { checkCartUser } from "../../firebase/service";
 
 const QuantityBox = (props) => {
   const dispatch = useDispatch();
@@ -30,7 +29,6 @@ const QuantityBox = (props) => {
                 return item;
               })
               .filter((item) => item.quantity !== 0);
-            checkCartUser(formUserInfo.uid, update);
             dispatch(decrementItemRedux(itemId));
           }}
         >
@@ -49,7 +47,6 @@ const QuantityBox = (props) => {
               }
               return item;
             });
-            checkCartUser(formUserInfo.uid, update);
             dispatch(incrementItemRedux(itemId));
           }}
           disabled={itemQuantity >= 5}
