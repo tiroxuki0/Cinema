@@ -32,7 +32,7 @@ const FeaturedSlider = () => {
 
   return (
     <Swiper
-      modules={[Navigation, A11y /* , Autoplay */]}
+      modules={[Navigation, A11y, Autoplay]}
       loop={true}
       speed={400}
       navigation={true}
