@@ -62,6 +62,16 @@ const FeaturedSlider = () => {
           ? createArray(7, null).map((item, i) => {
               return (
                 <SwiperSlide key={i} className="featured_slides">
+                  <figure className="featured_img">
+                    <a href="#">
+                      <Skeleton
+                        sx={{ bgcolor: "grey.900" }}
+                        variant="rect"
+                        width={"100%"}
+                        height={"100%"}
+                      />
+                    </a>
+                  </figure>
                   <div
                     className="featured_title"
                     style={{
@@ -73,37 +83,45 @@ const FeaturedSlider = () => {
                   >
                     <Skeleton
                       sx={{ bgcolor: "grey.900" }}
-                      width={200}
+                      width={"100%"}
                       height={50}
                     />
                   </div>
-                  <figure className="featured_img">
-                    <Skeleton
-                      sx={{ bgcolor: "grey.900" }}
-                      variant="rect"
-                      width={"100%"}
-                      height={200}
-                    />
-                  </figure>
                   <h2
-                    className="products_price"
+                    className="featured_info"
                     style={{
                       display: "flex",
-                      justifyContent: "center",
                       alignItems: "center",
-                      gap: "10px",
+                      justifyContent: "space-between",
                     }}
                   >
-                    <Skeleton
-                      sx={{ bgcolor: "grey.900" }}
-                      width={100}
-                      height={50}
-                    />
-                    <Skeleton
-                      sx={{ bgcolor: "grey.900" }}
-                      width={100}
-                      height={50}
-                    />
+                    <div
+                      className="featured_rate"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "5px",
+                        width: "50%",
+                      }}
+                    >
+                      <Skeleton
+                        sx={{ bgcolor: "grey.900" }}
+                        width={"50%"}
+                        height={30}
+                      />
+                      <Skeleton
+                        sx={{ bgcolor: "grey.900" }}
+                        width={"50%"}
+                        height={30}
+                      />
+                    </div>
+                    <div style={{ width: "25%" }}>
+                      <Skeleton
+                        sx={{ bgcolor: "grey.900" }}
+                        width={"100%"}
+                        height={30}
+                      />
+                    </div>
                   </h2>
                 </SwiperSlide>
               );
